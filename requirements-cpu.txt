@@ -1,34 +1,31 @@
 # Core FastAPI and server
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-python-multipart==0.0.6
+fastapi
+uvicorn[standard]
+python-multipart
 
 # Authentication
-msal==1.25.0
+msal
 
 # Environment and utilities
-python-dotenv==1.0.0
-pydantic==2.5.0
-requests==2.31.0
-aiofiles==23.2.1
+python-dotenv
+pydantic
+requests
+aiofiles
 
-# AI and LLM (CPU versions)
-groq==0.4.1
-langchain==0.1.0
-langchain-community==0.0.10
-langchain-huggingface==0.0.1
+# AI and LLM
+groq
+langchain
+langchain-community
+langchain-huggingface
 
-# Vector store and embeddings (CPU)
-faiss-cpu==1.7.4
-sentence-transformers==2.2.2
+# Vector store and embeddings (CPU only)
+faiss-cpu
+sentence-transformers
 
 # Text processing
-pypdf2==3.0.1
-python-docx==0.8.11
+pypdf2
+python-docx
 
-# Optional: If you use streamlit for testing
-streamlit==1.28.2
-
-# Avoid GPU packages
+# CPU-only PyTorch (prevents GPU packages)
 --extra-index-url https://download.pytorch.org/whl/cpu
-torch==2.1.0+cpu
+torch --index-url https://download.pytorch.org/whl/cpu
