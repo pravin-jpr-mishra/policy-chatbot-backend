@@ -1,0 +1,22 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Original dependencies
+langchain
+langchain-huggingface
+langchain-chroma
+langchain-text-splitters
+sentence-transformers
+chromadb
+pdfplumber
+pandas
+python-docx
+openpyxl
+requests
+llama-cpp-python
+tqdm
+groq
+msal
+python-dotenv

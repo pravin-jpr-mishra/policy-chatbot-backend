@@ -1,0 +1,14 @@
+# Ignore environment files with secrets
+.env
+
+# Ignore local development files
+auth_session.json
+conversation_histories.json
+qa_cache.json
+
+# Ignore frontend directory (deployed separately on Vercel)
+reactUI/
+
+# Ignore git files
+.git/
+.gitignore
