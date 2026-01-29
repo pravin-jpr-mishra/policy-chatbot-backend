@@ -24,6 +24,6 @@ services:
       - key: PRODUCTION_FRONTEND_URL
         sync: false
       - key: PYTHON_VERSION
-        value: "3.11"
+        value: "3.10"
     autoDeploy: true
     healthCheckPath: /
