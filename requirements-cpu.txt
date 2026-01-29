@@ -14,18 +14,27 @@ aiofiles
 
 # AI and LLM
 groq
+
+# LangChain packages (ALL of them your app uses)
 langchain
 langchain-community
 langchain-huggingface
+langchain-chroma
+langchain-core
+langchain-text-splitters
 
 # Vector store and embeddings (CPU only)
-faiss-cpu
+chromadb
 sentence-transformers
 
 # Text processing
 pypdf2
 python-docx
 
-# CPU-only PyTorch (prevents GPU packages)
---extra-index-url https://download.pytorch.org/whl/cpu
-torch --index-url https://download.pytorch.org/whl/cpu
+# Avoid heavy packages - use CPU-only versions
+numpy
+pandas
+
+# If needed, add these CPU-only torch packages (but they're large)
+# --extra-index-url https://download.pytorch.org/whl/cpu
+# torch --index-url https://download.pytorch.org/whl/cpu
