@@ -1,0 +1,29 @@
+# Render.com configuration file
+# This file configures your backend deployment on Render
+
+services:
+  - type: web
+    name: policy-chatbot-backend
+    runtime: python
+    region: singapore  # You can change this: oregon, frankfurt, singapore
+    plan: free
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api_backend:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CLIENT_ID
+        sync: false
+      - key: CLIENT_SECRET
+        sync: false
+      - key: TENANT_ID
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: PRODUCTION_FRONTEND_URL
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11"
+    autoDeploy: true
+    healthCheckPath: /
