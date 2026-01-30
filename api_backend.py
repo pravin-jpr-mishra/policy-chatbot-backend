@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 import uvicorn
 
 from auth import get_login_url, process_login_response
-from rag_pipeline import answer_question, load_retriever
+# Heavy imports moved to lazy loading to reduce startup memory
 import config
 from document_manager import (
     load_documents_registry,
@@ -21,8 +21,9 @@ from document_manager import (
     toggle_document_status
 )
 
-# Global retriever variable
+# Global retriever variable (loaded lazily)
 retriever = None
+_retriever_loaded = False
 
 # Global conversation history storage (per session)
 # Stores last 10 Q&A pairs per session token for context
@@ -342,12 +343,10 @@ def get_meaningful_short_answer(full_answer: str, question: str) -> str:
 # Lifespan context manager for startup/shutdown events
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    global retriever
-    retriever = load_retriever()
-    print("✓ Retriever loaded successfully")
+    # Startup - load only essential components
     load_conversation_histories()
     print("✓ Conversation histories loaded")
+    print("✓ App started successfully (heavy components will load on demand)")
     yield
     # Shutdown - save conversation histories
     save_conversation_histories()
@@ -469,6 +468,21 @@ def clear_auth_session():
             os.remove(AUTH_SESSION_FILE)
     except Exception as e:
         print(f"Error clearing auth session: {e}")
+
+def load_retriever_lazy():
+    """Lazy load retriever only when needed to save startup memory"""
+    global retriever, _retriever_loaded
+    if not _retriever_loaded:
+        try:
+            print("Loading retriever on demand...")
+            from rag_pipeline import load_retriever
+            retriever = load_retriever()
+            _retriever_loaded = True
+            print("✓ Retriever loaded successfully")
+        except Exception as e:
+            print(f"Error loading retriever: {e}")
+            retriever = None
+    return retriever
 
 def save_chat_history(history: list):
     """Save chat history to file"""
@@ -633,6 +647,14 @@ async def delete_document(document_name: str, owner: Optional[str] = None):
 async def ask_question(request: QuestionRequest):
     """Process a question and return answer"""
     try:
+        # Lazy load heavy components only when needed
+        retriever = load_retriever_lazy()
+        if retriever is None:
+            raise HTTPException(status_code=500, detail="Failed to load retriever")
+        
+        # Lazy import answer_question to avoid startup memory usage
+        from rag_pipeline import answer_question
+        
         start_time = time.time()
         
         print(f"Received question: {request.question}")
