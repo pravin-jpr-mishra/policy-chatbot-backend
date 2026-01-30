@@ -1,40 +1,75 @@
 # Core FastAPI and server
-fastapi
-uvicorn[standard]
-python-multipart
+fastapi==0.128.0
+uvicorn==0.40.0
+python-multipart==0.0.21
+starlette
 
 # Authentication
-msal
+msal==1.34.0
 
 # Environment and utilities
-python-dotenv
-pydantic
-requests
-aiofiles
+python-dotenv==1.2.1
+pydantic==2.12.5
+pydantic-core
 
-# AI and LLM
-groq
+# HTTP requests
+requests==2.32.5
+httpx
 
-# LangChain packages (ALL of them your app uses)
-langchain
-langchain-community
+# Basic Python utilities
+typing-extensions
+
+# GROQ API
+groq==1.0.0
+
+# LangChain packages (ALL that you import)
+langchain-text-splitters
 langchain-huggingface
 langchain-chroma
 langchain-core
-langchain-text-splitters
 
-# Vector store and embeddings (CPU only)
+# Vector store
 chromadb
+
+# HuggingFace embeddings and transformers
 sentence-transformers
+transformers
+tokenizers
+huggingface-hub
+
+# Document processing (ALL formats you use)
+pdfplumber==0.11.9
+python-docx==1.2.0
+pandas
+openpyxl
+
+# Data processing
+numpy
+pathlib
+
+# Date/time handling
+python-dateutil
+
+# JSON and utilities
+certifi
+charset-normalizer
 
 # Text processing
-pypdf2
-python-docx
+regex
 
-# Avoid heavy packages - use CPU-only versions
-numpy
-pandas
+# File handling
+aiofiles
 
-# If needed, add these CPU-only torch packages (but they're large)
-# --extra-index-url https://download.pytorch.org/whl/cpu
-# torch --index-url https://download.pytorch.org/whl/cpu
+# Authentication tokens
+PyJWT
+
+# Base64 encoding (built into Python, but some packages might need it)
+# Standard library modules (no install needed): time, json, os, re, datetime, pathlib, base64, contextlib
+
+# Essential dependencies for chromadb and sentence-transformers
+safetensors
+filelock
+fsspec
+
+# Required for HuggingFace models
+tqdm
