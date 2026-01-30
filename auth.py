@@ -15,14 +15,15 @@ TENANT_ID = os.getenv("TENANT_ID")
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")  # "development" or "production"
 
 # Production URLs - set these in your environment variables
-PRODUCTION_FRONTEND_URL = os.getenv("PRODUCTION_FRONTEND_URL", "https://your-app.vercel.app")
+# Normalize: ensure trailing slash to match Azure AD redirect URI
+PRODUCTION_FRONTEND_URL = os.getenv("PRODUCTION_FRONTEND_URL", "https://policy-chatbot-frontend.vercel.app/")
 
 # Supported redirect URIs for different environments
 REDIRECT_URIS = {
     # Local development
     "local_react": "http://localhost:3000",
     "local_streamlit": "http://localhost:8501/",
-    # Production (Vercel)
+    # Production (Vercel) - must match Azure AD exactly
     "production": PRODUCTION_FRONTEND_URL,
 }
 
